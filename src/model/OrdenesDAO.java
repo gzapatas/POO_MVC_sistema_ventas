@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class OrdenesDAO extends Conexion {
     public ArrayList<Ordenes> listar(){
         Connection con = getConnection();
-        String query = "SELECT idOrden,idCliente,idCajero,idComprobante,montoTotal,"
+        String query = "SELECT idOrden,idCliente,idCajero,montoTotal,"
                 + "descuento,fecha,fechaHora,timestamp"
                 + " FROM Ordenes";
         
@@ -35,7 +35,6 @@ public class OrdenesDAO extends Conexion {
                 item.setIdOrden(Long.parseLong(rs.getString("idOrden")));
                 item.setIdCliente(Long.parseLong(rs.getString("idCliente")));
                 item.setIdCajero(Long.parseLong(rs.getString("idCajero")));
-                item.setIdComprobante(Long.parseLong(rs.getString("idComprobante")));
                 item.setMontoTotal(Double.parseDouble(rs.getString("montoTotal")));
                 item.setDescuento(Double.parseDouble(rs.getString("descuento")));
                 item.setFecha(rs.getDate("fecha"));
@@ -62,7 +61,7 @@ public class OrdenesDAO extends Conexion {
     
     public Ordenes buscar(long id){
         Connection con = getConnection();
-        String query = "SELECT idOrden,idCliente,idCajero,idComprobante,montoTotal,"
+        String query = "SELECT idOrden,idCliente,idCajero,montoTotal,"
                 + "descuento,fecha,fechaHora,timestamp FROM Ordenes"
                 + " WHERE idOrden = ? LIMIT 1";
         
@@ -76,7 +75,6 @@ public class OrdenesDAO extends Conexion {
                 item.setIdOrden(Long.parseLong(rs.getString("idOrden")));
                 item.setIdCliente(Long.parseLong(rs.getString("idCliente")));
                 item.setIdCajero(Long.parseLong(rs.getString("idCajero")));
-                item.setIdComprobante(Long.parseLong(rs.getString("idComprobante")));
                 item.setMontoTotal(Double.parseDouble(rs.getString("montoTotal")));
                 item.setDescuento(Double.parseDouble(rs.getString("descuento")));
                 item.setFecha(rs.getDate("fecha"));
@@ -103,7 +101,7 @@ public class OrdenesDAO extends Conexion {
     
     public boolean insertar(Ordenes item){
         Connection con = getConnection();
-        String query = "INSERT INTO Ordenes(idCliente,idCajero,idComprobante,"
+        String query = "INSERT INTO Ordenes(idCliente,idCajero,"
                 + "montoTotal,descuento,fecha,fechaHora,timestamp"
                 + " VALUES(?,?,?,?,?,?,?,?);";
         
@@ -114,7 +112,6 @@ public class OrdenesDAO extends Conexion {
             
             ps.setLong(i++,item.getIdCliente());
             ps.setLong(i++,item.getIdCajero());
-            ps.setLong(i++,item.getIdComprobante());
             ps.setDouble(i++,item.getMontoTotal());
             ps.setDouble(i++,item.getDescuento());
             ps.setDate(i++,item.getFecha());
@@ -141,7 +138,7 @@ public class OrdenesDAO extends Conexion {
     public boolean actualizar(Ordenes item){
         Connection con = getConnection();
         String query = "UPDATE Ordenes SET idCliente = ?,idCajero = ?,"
-                + "idComprobante = ?,montoTotal = ?,descuento = ?,"
+                + "montoTotal = ?,descuento = ?,"
                 + "fecha = ?,fechaHora = ?,timestamp = ?"
                 + " WHERE idOrden = ?";
         
@@ -152,7 +149,6 @@ public class OrdenesDAO extends Conexion {
             
             ps.setLong(i++,item.getIdCliente());
             ps.setLong(i++,item.getIdCajero());
-            ps.setLong(i++,item.getIdComprobante());
             ps.setDouble(i++,item.getMontoTotal());
             ps.setDouble(i++,item.getDescuento());
             ps.setDate(i++,item.getFecha());

@@ -16,7 +16,6 @@ public class Ordenes {
     private long idOrden;
     private long idCliente;
     private long idCajero;
-    private long idComprobante;
     private double montoTotal;
     private double descuento;
     private Date fecha;
@@ -45,14 +44,6 @@ public class Ordenes {
 
     public void setIdCajero(long idCajero) {
         this.idCajero = idCajero;
-    }
-
-    public long getIdComprobante() {
-        return idComprobante;
-    }
-
-    public void setIdComprobante(long idComprobante) {
-        this.idComprobante = idComprobante;
     }
 
     public double getMontoTotal() {

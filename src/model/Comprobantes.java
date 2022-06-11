@@ -14,6 +14,7 @@ import java.sql.Date;
  */
 public class Comprobantes {
     private long idComprobante;
+    private long idOrden;
     private String tipo;
     private String codigo;
     private double subTotal;
@@ -30,6 +31,14 @@ public class Comprobantes {
         this.idComprobante = idComprobante;
     }
 
+    public long getIdOrden() {
+        return idOrden;
+    }
+
+    public void setIdOrden(long idOrden) {
+        this.idOrden = idOrden;
+    }
+    
     public String getTipo() {
         return tipo;
     }

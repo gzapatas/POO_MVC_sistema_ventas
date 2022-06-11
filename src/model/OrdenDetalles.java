@@ -14,7 +14,7 @@ import java.sql.Date;
  */
 public class OrdenDetalles {
     private long idDetalle;
-    private long idVenta;
+    private long idOrden;
     private long idProducto;
     private int cantidad;
     private double precioUnitario;
@@ -31,12 +31,12 @@ public class OrdenDetalles {
         this.idDetalle = idDetalle;
     }
 
-    public long getIdVenta() {
-        return idVenta;
+    public long getIdOrden() {
+        return idOrden;
     }
 
-    public void setIdVenta(long idVenta) {
-        this.idVenta = idVenta;
+    public void setIdOrden(long idVenta) {
+        this.idOrden = idVenta;
     }
 
     public long getIdProducto() {

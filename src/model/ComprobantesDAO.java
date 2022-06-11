@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class ComprobantesDAO extends Conexion {
     public ArrayList<Comprobantes> listar(){
         Connection con = getConnection();
-        String query = "SELECT idComprobante,tipo,codigo,subTotal,impuesto,"
+        String query = "SELECT idComprobante,idOrden,tipo,codigo,subTotal,impuesto,"
                 + "fecha,fechaHora,timestamp"
                 + " FROM Comprobantes";
         
@@ -33,6 +33,7 @@ public class ComprobantesDAO extends Conexion {
                 Comprobantes item = new Comprobantes();
                 
                 item.setIdComprobante(Long.parseLong(rs.getString("idComprobante")));
+                item.setIdOrden(Long.parseLong(rs.getString("idOrden")));
                 item.setTipo(rs.getString("tipo"));
                 item.setCodigo(rs.getString("codigo"));
                 item.setSubTotal(Double.parseDouble(rs.getString("subTotal")));
@@ -61,7 +62,7 @@ public class ComprobantesDAO extends Conexion {
     
     public Comprobantes buscar(long id){
         Connection con = getConnection();
-        String query = "SELECT idComprobante,tipo,codigo,subTotal,impuesto,"
+        String query = "SELECT idComprobante,idOrden,tipo,codigo,subTotal,impuesto,"
                 + "fecha,fechaHora,timestamp FROM Comprobantes"
                 + " WHERE idComprobante = ? LIMIT 1";
         
@@ -73,6 +74,7 @@ public class ComprobantesDAO extends Conexion {
             
             while(rs.next()) {                
                 item.setIdComprobante(Long.parseLong(rs.getString("idComprobante")));
+                item.setIdOrden(Long.parseLong(rs.getString("idOrden")));
                 item.setTipo(rs.getString("tipo"));
                 item.setCodigo(rs.getString("codigo"));
                 item.setSubTotal(Double.parseDouble(rs.getString("subTotal")));
@@ -101,15 +103,16 @@ public class ComprobantesDAO extends Conexion {
     
     public boolean insertar(Comprobantes item){
         Connection con = getConnection();
-        String query = "INSERT INTO Comprobantes(tipo,codigo,subTotal,impuesto,"
-                + "fecha,fechaHora,timestamp"
-                + " VALUES(?,?,?,?,?,?,?);";
+        String query = "INSERT INTO Comprobantes(idOrden,tipo,codigo,subTotal,"
+                + "impuesto,fecha,fechaHora,timestamp"
+                + " VALUES(?,?,?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             
             int i = 1;
             
+            ps.setLong(i++,item.getIdOrden());
             ps.setString(i++,item.getTipo());
             ps.setString(i++,item.getCodigo());
             ps.setDouble(i++,item.getSubTotal());
@@ -137,8 +140,8 @@ public class ComprobantesDAO extends Conexion {
     
     public boolean actualizar(Comprobantes item){
         Connection con = getConnection();
-        String query = "UPDATE Comprobantes SET tipo = ?,codigo = ?,subTotal = ?,"
-                + "impuesto = ?,fecha = ?,fechaHora = ?,timestamp = ?"
+        String query = "UPDATE Comprobantes SET idOrden = ?,tipo = ?,codigo = ?,"
+                + "subTotal = ?,impuesto = ?,fecha = ?,fechaHora = ?,timestamp = ?"
                 + " WHERE idComprobante = ?";
         
         try {
@@ -146,6 +149,7 @@ public class ComprobantesDAO extends Conexion {
             
             int i = 1;
             
+            ps.setLong(i++,item.getIdOrden());
             ps.setString(i++,item.getTipo());
             ps.setString(i++,item.getCodigo());
             ps.setDouble(i++,item.getSubTotal());
