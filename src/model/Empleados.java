@@ -12,24 +12,33 @@ import java.sql.Date;
  *
  * @author gzapata
  */
-public class Cajeros {
-    private long idCajero;
+public class Empleados {
+    private long idEmpleado;
     private String nombres;
     private String apellidos;
     private String telefono;
     private String celular;
     private String documento;
+    private String tipoEmpleado;
     private Date fechaNacimiento;
     private Date fecha;
     private Date fechaHora;
     private long timestamp;
 
-    public long getIdCajero() {
-        return idCajero;
+    public String getTipoEmpleado() {
+        return tipoEmpleado;
     }
 
-    public void setIdCajero(long idCajero) {
-        this.idCajero = idCajero;
+    public void setTipoEmpleado(String tipoEmpleado) {
+        this.tipoEmpleado = tipoEmpleado;
+    }
+
+    public long getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(long idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public String getNombres() {

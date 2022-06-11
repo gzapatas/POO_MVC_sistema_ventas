@@ -17,20 +17,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CajerosDAO extends Conexion {
-    public ArrayList<Cajeros> listar(){
+public class EmpleadosDAO extends Conexion {
+    public ArrayList<Empleados> listar(){
         Connection con = getConnection();
         String query = "SELECT apellidos,celular,documento,fecha,"
-                + "fechaHora,fechaNacimiento,idCajero,nombres,"
-                + "telefono,timestamp FROM Cajeros";
+                + "fechaHora,fechaNacimiento,idEmpleado,nombres,tipoEmpleado,"
+                + "telefono,timestamp, FROM Empleados";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            ArrayList<Cajeros> list = new ArrayList<Cajeros>();
+            ArrayList<Empleados> list = new ArrayList<Empleados>();
             
             while(rs.next()) {
-                Cajeros item = new Cajeros();
+                Empleados item = new Empleados();
                 
                 item.setApellidos(rs.getString("apellidos"));
                 item.setCelular(rs.getString("celular"));
@@ -38,8 +38,9 @@ public class CajerosDAO extends Conexion {
                 item.setFecha(rs.getDate("fecha"));
                 item.setFechaHora(rs.getDate("fechaHora"));
                 item.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                item.setIdCajero(Long.parseLong(rs.getString("idCajero")));
+                item.setIdEmpleado(Long.parseLong(rs.getString("idEmpleado")));
                 item.setNombres(rs.getString("nombres"));
+                item.setTipoEmpleado(rs.getString("tipoEmpleado"));
                 item.setTelefono(rs.getString("telefono"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
@@ -61,17 +62,17 @@ public class CajerosDAO extends Conexion {
         }
     }
     
-    public Cajeros buscar(long id){
+    public Empleados buscar(long id){
         Connection con = getConnection();
         String query = "SELECT apellidos,celular,documento,fecha,"
-                + "fechaHora,fechaNacimiento,idCajero,nombres,"
-                + "telefono,timestamp FROM Cajeros WHERE idCajero = ? LIMIT 1";
+                + "fechaHora,fechaNacimiento,idEmpleado,nombres,tipoEmpleado,"
+                + "telefono,timestamp FROM Empleados WHERE idEmpleado = ? LIMIT 1";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setLong(1,id);
             ResultSet rs = ps.executeQuery();
-            Cajeros item = new Cajeros();
+            Empleados item = new Empleados();
             
             while(rs.next()) {                
                 item.setApellidos(rs.getString("apellidos"));
@@ -80,8 +81,9 @@ public class CajerosDAO extends Conexion {
                 item.setFecha(rs.getDate("fecha"));
                 item.setFechaHora(rs.getDate("fechaHora"));
                 item.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                item.setIdCajero(Long.parseLong(rs.getString("idCajero")));
+                item.setIdEmpleado(Long.parseLong(rs.getString("idEmpleado")));
                 item.setNombres(rs.getString("nombres"));
+                item.setTipoEmpleado(rs.getString("tipoEmpleado"));
                 item.setTelefono(rs.getString("telefono"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
@@ -103,9 +105,9 @@ public class CajerosDAO extends Conexion {
         }
     }
     
-    public boolean insertar(Cajeros item){
+    public boolean insertar(Empleados item){
         Connection con = getConnection();
-        String query = "INSERT INTO Cajeros(apellidos,celular,documento,"
+        String query = "INSERT INTO Empleados(apellidos,celular,documento,tipoEmpleado,"
                 + "fecha,fechaHora,fechaNacimiento,nombres,telefono,timestamp)"
                 + " VALUES(?,?,?,?,?,?,?,?,?);";
         
@@ -117,6 +119,7 @@ public class CajerosDAO extends Conexion {
             ps.setString(i++,item.getApellidos());
             ps.setString(i++,item.getCelular());
             ps.setString(i++,item.getDocumento());
+            ps.setString(i++,item.getTipoEmpleado());
             ps.setDate(i++,item.getFecha());
             ps.setDate(i++,item.getFechaHora());
             ps.setDate(i++,item.getFechaNacimiento());
@@ -141,12 +144,12 @@ public class CajerosDAO extends Conexion {
         }
     }
     
-    public boolean actualizar(Cajeros item){
+    public boolean actualizar(Empleados item){
         Connection con = getConnection();
-        String query = "UPDATE Cajeros SET apellidos = ?,celular = ?,"
+        String query = "UPDATE Empleados SET apellidos = ?,celular = ?,tipoEmpleado = ?"
                 + "documento = ?,fecha = ?,fechaHora = ?,fechaNacimiento = ?,"
                 + "nombres = ?,telefono = ?,timestamp = ?"
-                + " WHERE idCajero = ?";
+                + " WHERE idEmpleado = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -155,6 +158,7 @@ public class CajerosDAO extends Conexion {
             
             ps.setString(i++,item.getApellidos());
             ps.setString(i++,item.getCelular());
+            ps.setString(i++,item.getTipoEmpleado());
             ps.setString(i++,item.getDocumento());
             ps.setDate(i++,item.getFecha());
             ps.setDate(i++,item.getFechaHora());
@@ -162,7 +166,7 @@ public class CajerosDAO extends Conexion {
             ps.setString(i++,item.getNombres());
             ps.setString(i++,item.getTelefono());
             ps.setLong(i++,item.getTimestamp());
-            ps.setLong(i++,item.getIdCajero());
+            ps.setLong(i++,item.getIdEmpleado());
             
             ps.executeUpdate();
             ps.close();
@@ -183,7 +187,7 @@ public class CajerosDAO extends Conexion {
     
     public boolean eliminar(long id){
         Connection con = getConnection();
-        String query = "DELETE FROM Cajeros WHERE idCajero = ?";
+        String query = "DELETE FROM Empleados WHERE idEmpleado = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
