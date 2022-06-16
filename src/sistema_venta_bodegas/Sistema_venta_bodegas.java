@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package sistema_venta_bodegas;
-import controllers.CtrlInventario;
+import controllers.CtrlPrincipal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.MenuPrincipal;
+import view.Principal;
 
 /**
  *
@@ -25,7 +27,8 @@ public class Sistema_venta_bodegas {
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(Sistema_venta_bodegas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        CtrlInventario ctrl = new CtrlInventario();
+          
+        CtrlPrincipal ctrl = new CtrlPrincipal(MenuPrincipal.getInstance());
         ctrl.init();
     }
     

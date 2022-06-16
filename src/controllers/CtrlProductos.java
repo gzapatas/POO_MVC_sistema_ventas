@@ -8,17 +8,17 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JInternalFrame;
-import view.Inventario;
 import view.MenuPrincipal;
+import view.Productos;
 
 /**
  *
  * @author gzapata
  */
-public class CtrlInventario implements ActionListener {
-    private final Inventario view;
+public class CtrlProductos implements ActionListener {
+    private final Productos view;
 
-    public CtrlInventario(Inventario view) {
+    public CtrlProductos(Productos view) {
         this.view = view;
         this.view.btnAgregar.addActionListener(this);
         this.view.btnBuscar.addActionListener(this);
