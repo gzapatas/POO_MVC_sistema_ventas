@@ -90,4 +90,9 @@ public class Productos {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+    
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
 }
