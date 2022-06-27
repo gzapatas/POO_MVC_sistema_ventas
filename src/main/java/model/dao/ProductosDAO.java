@@ -38,8 +38,8 @@ public class ProductosDAO extends ConexionFactory {
                 item.setNombre(rs.getString("nombre"));
                 item.setIdCategoria(Long.parseLong(rs.getString("idCategoria")));
                 item.setDescripcion(rs.getString("descripcion"));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 list.add(item);
@@ -78,8 +78,8 @@ public class ProductosDAO extends ConexionFactory {
                 item.setNombre(rs.getString("nombre"));
                 item.setIdCategoria(Long.parseLong(rs.getString("idCategoria")));
                 item.setDescripcion(rs.getString("descripcion"));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 break;
@@ -115,8 +115,8 @@ public class ProductosDAO extends ConexionFactory {
             ps.setString(i++,item.getNombre());
             ps.setLong(i++,item.getIdCategoria());
             ps.setString(i++,item.getDescripcion());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             
             ps.execute();
@@ -152,8 +152,8 @@ public class ProductosDAO extends ConexionFactory {
             ps.setString(i++,item.getNombre());
             ps.setLong(i++,item.getIdCategoria());
             ps.setString(i++,item.getDescripcion());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             ps.setLong(i++,item.getIdProducto());
             
@@ -175,7 +175,7 @@ public class ProductosDAO extends ConexionFactory {
     
     public boolean eliminar(long id){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "DELETE FROM Productos WHERE idDetalle = ?";
+        String query = "DELETE FROM Productos WHERE idProducto = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);

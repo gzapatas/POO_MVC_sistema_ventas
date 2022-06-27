@@ -39,9 +39,7 @@ public class Mysql implements ConexionInterface {
                 + env.DbModel.getIp() + ":" 
                 + env.DbModel.getPort()+ "/" 
                 + env.DbModel.getName();
-            
-            System.err.println(url);
-            
+
             con = DriverManager.getConnection(url, env.DbModel.getUser(), env.DbModel.getPassword()); 
         } catch(SQLException ex) {
             System.err.println(ex);

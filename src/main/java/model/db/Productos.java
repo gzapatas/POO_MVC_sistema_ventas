@@ -18,10 +18,15 @@ public class Productos {
     private String nombre;
     private long idCategoria;
     private String descripcion;
-    private Date fecha;
-    private Date fechaHora;
+    private String fecha;
+    private String fechaHora;
     private long timestamp;
 
+    public boolean valido() {
+        return !("".equals(sku) || "".equals(nombre) || "".equals(fecha) || 
+                "".equals(fechaHora) || "".equals(descripcion) || idCategoria == 0);
+    }
+    
     public long getIdProducto() {
         return idProducto;
     }
@@ -62,19 +67,19 @@ public class Productos {
         this.descripcion = descripcion;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFechaHora() {
+    public String getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
 

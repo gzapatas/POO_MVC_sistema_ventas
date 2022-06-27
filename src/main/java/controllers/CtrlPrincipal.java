@@ -9,15 +9,14 @@ import controllers.Menu.MenuBuilderMantenedores;
 import controllers.Menu.MenuBuilderVentas;
 import controllers.Menu.MenuDirector;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import view.MenuPrincipalView;
+import javax.swing.AbstractAction;
 import view.PrincipalView;
 
 /**
  *
  * @author gzapata
  */
-public class CtrlPrincipal implements ActionListener {
+public class CtrlPrincipal extends AbstractAction {
     private final PrincipalView view;
 
     public CtrlPrincipal(PrincipalView view) {

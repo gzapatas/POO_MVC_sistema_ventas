@@ -18,9 +18,7 @@ public class MenuItemFactory {
     public static String FACTURA = "Factura";
     
     
-    public static MenuItem getMenuItem(String key){
-        MenuItem item = null;
-        
+    public static MenuItem getMenuItem(String key){       
         switch(key){
             case "Productos":
                 return new MenuItemProductos(key);

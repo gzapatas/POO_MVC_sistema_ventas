@@ -6,7 +6,7 @@
 package controllers;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.AbstractAction;
 import javax.swing.JInternalFrame;
 import view.InventarioView;
 import view.MenuPrincipalView;
@@ -15,7 +15,7 @@ import view.MenuPrincipalView;
  *
  * @author gzapata
  */
-public class CtrlInventario implements ActionListener {
+public class CtrlInventario extends AbstractAction {
     private final InventarioView view;
 
     public CtrlInventario(InventarioView view) {
