@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 package sistema_venta_bodegas;
-import configs.Env;
-import controllers.CtrlPrincipal;
+import configuraciones.Env;
+import controlador.CtrlPrincipal;
 import database.ConexionFactory;
-import view.MenuPrincipalView;
+import vista.MenuPrincipalView;
 
 /**
  *
