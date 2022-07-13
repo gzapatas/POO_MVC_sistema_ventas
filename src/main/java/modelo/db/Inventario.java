@@ -15,11 +15,17 @@ import java.sql.Date;
 public class Inventario {
     private long idInventario;
     private long idProducto;
+    private String producto;
     private int cantidad;
     private double precioUnitario;
-    private Date fecha;
-    private Date fechaHora;
+    private String fecha;
+    private String fechaHora;
     private long timestamp;
+    
+    public boolean valido() {
+        return !(idProducto == 0 || "".equals(fecha) || "".equals(fechaHora) ||
+                    precioUnitario == 0 || cantidad == 0);
+    }
 
     public long getIdInventario() {
         return idInventario;
@@ -35,6 +41,14 @@ public class Inventario {
 
     public void setIdProducto(long idProducto) {
         this.idProducto = idProducto;
+    }
+    
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
 
     public int getCantidad() {
@@ -53,19 +67,19 @@ public class Inventario {
         this.precioUnitario = precioUnitario;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFechaHora() {
+    public String getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
 

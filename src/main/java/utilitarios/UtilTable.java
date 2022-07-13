@@ -19,12 +19,13 @@ public class UtilTable {
     public static void ClearTable(JTable table){
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
+        table.setRowHeight(32);
     }
     
     public static void AddRow(JTable table, ArrayList<Object> object){
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        object.add("Actualizar");
-        object.add("Eliminar");
+        object.add("");
+        object.add("");
         model.addRow(object.toArray());
         
         table.setModel(model);
@@ -35,6 +36,11 @@ public class UtilTable {
         var count = table.getColumnCount();
         ButtonColumn editar = new ButtonColumn(table, action, count-2, "UPDATE");
         ButtonColumn eliminar = new ButtonColumn(table, action, count-1, "DELETE");
+        
+        table.getColumnModel().getColumn(0).setMaxWidth(50);
+        table.getColumnModel().getColumn(count-2).setMaxWidth(32);
+        table.getColumnModel().getColumn(count-1).setMaxWidth(32);
+        
         editar.setMnemonic(KeyEvent.VK_E);
         eliminar.setMnemonic(KeyEvent.VK_D);
     }

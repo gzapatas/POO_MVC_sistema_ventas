@@ -6,7 +6,7 @@
 package sistema_venta_bodegas;
 import configuraciones.Env;
 import controlador.CtrlPrincipal;
-import database.ConexionFactory;
+import modelo.db.ConexionFactory;
 import vista.MenuPrincipalView;
 
 /**

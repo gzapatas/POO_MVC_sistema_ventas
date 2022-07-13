@@ -1,6 +1,6 @@
 package modelo.dao;
 
-import database.ConexionFactory;
+import modelo.db.ConexionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,9 +40,9 @@ public class ClientesDAO extends ConexionFactory {
                 item.setCelular(rs.getString("celular"));
                 item.setTipoDocumento(rs.getString("tipoDocumento"));
                 item.setDocumento(rs.getString("documento"));
-                item.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 list.add(item);
@@ -83,9 +83,9 @@ public class ClientesDAO extends ConexionFactory {
                 item.setCelular(rs.getString("celular"));
                 item.setTipoDocumento(rs.getString("tipoDocumento"));
                 item.setDocumento(rs.getString("documento"));
-                item.setFechaNacimiento(rs.getDate("fechaNacimiento"));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 break;
@@ -122,9 +122,10 @@ public class ClientesDAO extends ConexionFactory {
             ps.setString(i++,item.getTelefono());
             ps.setString(i++,item.getCelular());
             ps.setString(i++,item.getTipoDocumento());
-            ps.setDate(i++,item.getFechaNacimiento());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getDocumento());
+            ps.setString(i++,item.getFechaNacimiento());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             
             ps.execute();
@@ -160,9 +161,10 @@ public class ClientesDAO extends ConexionFactory {
             ps.setString(i++,item.getTelefono());
             ps.setString(i++,item.getCelular());
             ps.setString(i++,item.getTipoDocumento());
-            ps.setDate(i++,item.getFechaNacimiento());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getDocumento());
+            ps.setString(i++,item.getFechaNacimiento());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             ps.setLong(i++,item.getIdCliente());
             

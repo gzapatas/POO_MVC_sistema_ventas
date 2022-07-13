@@ -1,6 +1,6 @@
 package modelo.dao;
 
-import database.ConexionFactory;
+import modelo.db.ConexionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,9 +21,10 @@ import modelo.db.Inventario;
 public class InventarioDAO extends ConexionFactory {
     public ArrayList<Inventario> listar(){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "SELECT idInventario,idProducto,cantidad,precioUnitario,"
-                + "fecha,fechaHora,timestamp"
-                + " FROM Inventario";
+        String query = "SELECT i.idInventario,i.idProducto,i.cantidad"
+                + ",i.precioUnitario,i.fecha,i.fechaHora,i.timestamp, p.nombre "
+                + "FROM Inventario i INNER JOIN Productos p "
+                + "ON (i.idProducto = p.idProducto)";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -37,9 +38,10 @@ public class InventarioDAO extends ConexionFactory {
                 item.setIdProducto(Long.parseLong(rs.getString("idProducto")));
                 item.setCantidad(Integer.parseInt(rs.getString("cantidad")));
                 item.setPrecioUnitario(Double.parseDouble(rs.getString("precioUnitario")));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
+                item.setProducto(rs.getString("nombre"));
                 
                 list.add(item);
             }
@@ -61,9 +63,11 @@ public class InventarioDAO extends ConexionFactory {
     
     public Inventario buscar(long id){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "SELECT idInventario,idProducto,cantidad,precioUnitario,"
-                + "fecha,fechaHora,timestamp FROM Inventario"
-                + " WHERE idInventario = ? LIMIT 1";
+        String query = "SELECT i.idInventario,i.idProducto,i.cantidad"
+                + ",i.precioUnitario,i.fecha,i.fechaHora,i.timestamp, p.nombre "
+                + "FROM Inventario i INNER JOIN Productos p "
+                + "ON (i.idProducto = p.idProducto) "
+                + "WHERE i.idInventario = ? LIMIT 1";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -76,9 +80,10 @@ public class InventarioDAO extends ConexionFactory {
                 item.setIdProducto(Long.parseLong(rs.getString("idProducto")));
                 item.setCantidad(Integer.parseInt(rs.getString("cantidad")));
                 item.setPrecioUnitario(Double.parseDouble(rs.getString("precioUnitario")));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
+                item.setProducto(rs.getString("nombre"));
                 
                 break;
             }
@@ -112,8 +117,8 @@ public class InventarioDAO extends ConexionFactory {
             ps.setLong(i++,item.getIdProducto());
             ps.setInt(i++,item.getCantidad());
             ps.setDouble(i++,item.getPrecioUnitario());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             
             ps.execute();
@@ -147,8 +152,8 @@ public class InventarioDAO extends ConexionFactory {
             ps.setLong(i++,item.getIdProducto());
             ps.setInt(i++,item.getCantidad());
             ps.setDouble(i++,item.getPrecioUnitario());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             ps.setLong(i++,item.getIdInventario());
             

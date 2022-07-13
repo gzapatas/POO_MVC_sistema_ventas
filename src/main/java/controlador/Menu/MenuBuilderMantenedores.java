@@ -26,6 +26,8 @@ public class MenuBuilderMantenedores extends MenuBuilder {
         menuItems.add(MenuItemFactory.getMenuItem(MenuItemFactory.CATEGORIAS).getItem());
         menuItems.add(MenuItemFactory.getMenuItem(MenuItemFactory.PRODUCTOS).getItem());
         menuItems.add(MenuItemFactory.getMenuItem(MenuItemFactory.INVENTARIO).getItem());
+        menuItems.add(MenuItemFactory.getMenuItem(MenuItemFactory.EMPLEADOS).getItem());
+        menuItems.add(MenuItemFactory.getMenuItem(MenuItemFactory.CLIENTES).getItem());
         
         menu.setSubMenus(menuItems);
     }

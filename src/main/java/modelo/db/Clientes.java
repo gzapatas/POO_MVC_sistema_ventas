@@ -1,7 +1,5 @@
 package modelo.db;
 
-import java.sql.Date;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,11 +18,16 @@ public class Clientes {
     private String celular;
     private String tipoDocumento;
     private String documento;
-    private Date fechaNacimiento;
-    private Date fecha;
-    private Date fechaHora;
+    private String fechaNacimiento;
+    private String fecha;
+    private String fechaHora;
     private long timestamp;
 
+    public boolean valido() {
+        return !("".equals(nombres) || "".equals(apellidos) || "".equals(telefono)) ||
+                !("".equals(celular) || "".equals(documento) || "".equals(tipoDocumento));
+    }
+    
     public long getIdCliente() {
         return idCliente;
     }
@@ -81,27 +84,27 @@ public class Clientes {
         this.documento = documento;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFechaHora() {
+    public String getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
 

@@ -20,11 +20,16 @@ public class Empleados {
     private String celular;
     private String documento;
     private String tipoEmpleado;
-    private Date fechaNacimiento;
-    private Date fecha;
-    private Date fechaHora;
+    private String fechaNacimiento;
+    private String fecha;
+    private String fechaHora;
     private long timestamp;
 
+    public boolean valido() {
+        return !("".equals(nombres) || "".equals(apellidos) || "".equals(telefono)) ||
+                !("".equals(celular) || "".equals(documento) || "".equals(tipoEmpleado));
+    }
+    
     public String getTipoEmpleado() {
         return tipoEmpleado;
     }
@@ -81,27 +86,27 @@ public class Empleados {
         this.documento = documento;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFechaHora() {
+    public String getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
 

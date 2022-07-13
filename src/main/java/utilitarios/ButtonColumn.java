@@ -7,6 +7,7 @@ package utilitarios;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
@@ -46,19 +47,21 @@ public class ButtonColumn extends AbstractCellEditor
 	 *  @param table the table containing the button renderer/editor
 	 *  @param action the Action to be invoked when the button is invoked
 	 *  @param column the column to which the button renderer/editor is added
+         *  @param key 
 	 */
 	public ButtonColumn(JTable table, Action action, int column, String key)
 	{
 		this.table = table;
 		this.action = action;
                 this.key = key;
-
-		renderButton = new JButton();
+                   
+                ImageIcon image = new ImageIcon(System.getProperty("user.dir") + "/" + key + ".png");
+                renderButton = new JButton(new ImageIcon(getScaledImage(image.getImage(), 30, 30)));
 		editButton = new JButton();
-		editButton.setFocusPainted( false );
-		editButton.addActionListener( this );
+		editButton.setFocusPainted(false);
+		editButton.addActionListener(this);
 		originalBorder = editButton.getBorder();
-		setFocusBorder( new LineBorder(Color.BLUE) );
+		setFocusBorder(new LineBorder(Color.BLUE));
 
 		TableColumnModel columnModel = table.getColumnModel();
 		columnModel.getColumn(column).setCellRenderer( this );
@@ -66,6 +69,14 @@ public class ButtonColumn extends AbstractCellEditor
 		table.addMouseListener( this );
 	}
 
+        private Image getScaledImage(Image srcImg, int w, int h){
+            BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
+            Graphics2D g2 = resizedImg.createGraphics();
+            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2.drawImage(srcImg, 0, 0, w, h, null);
+            g2.dispose();
+            return resizedImg;
+        }
 
 	/**
 	 *  Get foreground color of the button when the cell has focus
@@ -112,17 +123,17 @@ public class ButtonColumn extends AbstractCellEditor
 		if (value == null)
 		{
 			editButton.setText( "" );
-			editButton.setIcon( null );
+			//editButton.setIcon( null );
 		}
 		else if (value instanceof Icon)
 		{
 			editButton.setText( "" );
-			editButton.setIcon( (Icon)value );
+			//editButton.setIcon( (Icon)value );
 		}
 		else
 		{
 			editButton.setText( value.toString() );
-			editButton.setIcon( null );
+			//editButton.setIcon( null );
 		}
 
 		this.editorValue = value;
@@ -165,17 +176,17 @@ public class ButtonColumn extends AbstractCellEditor
 		if (value == null)
 		{
 			renderButton.setText( "" );
-			renderButton.setIcon( null );
+			//renderButton.setIcon( null );
 		}
 		else if (value instanceof Icon)
 		{
 			renderButton.setText( "" );
-			renderButton.setIcon( (Icon)value );
+			//renderButton.setIcon( (Icon)value );
 		}
 		else
 		{
 			renderButton.setText( value.toString() );
-			renderButton.setIcon( null );
+			//renderButton.setIcon( null );
 		}
 
 		return renderButton;

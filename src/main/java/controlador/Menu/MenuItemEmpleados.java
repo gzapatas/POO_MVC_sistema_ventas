@@ -5,23 +5,23 @@
  */
 package controlador.Menu;
 
-import controlador.CtrlCategorias;
+import controlador.CtrlEmpleados;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
-import vista.CategoriasView;
+import vista.EmpleadosView;
 
 /**
  *
  * @author gzapata
  */
-public class MenuItemCategorias implements MenuItem {
-    private final CtrlCategorias controller;
+public class MenuItemEmpleados implements MenuItem {
+    private final CtrlEmpleados controller;
     private final JMenuItem item;
 
-    public MenuItemCategorias(String text) {
+    public MenuItemEmpleados(String text) {
         this.item = new JMenuItem(text);
-        CategoriasView view = new CategoriasView();
-        controller = new CtrlCategorias(view);
+        EmpleadosView view = new EmpleadosView();
+        controller = new CtrlEmpleados(view);
         this.item.addActionListener(this);
     }
 

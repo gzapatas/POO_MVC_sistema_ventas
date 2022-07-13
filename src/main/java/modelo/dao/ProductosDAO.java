@@ -1,6 +1,6 @@
 package modelo.dao;
 
-import database.ConexionFactory;
+import modelo.db.ConexionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

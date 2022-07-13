@@ -5,23 +5,21 @@
  */
 package controlador.Menu;
 
-import controlador.CtrlCategorias;
+import controlador.CtrlClientes;
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
-import vista.CategoriasView;
+import utilitarios.UtilDialog;
+import vista.ClientesView;
 
 /**
  *
  * @author gzapata
  */
-public class MenuItemCategorias implements MenuItem {
-    private final CtrlCategorias controller;
+public class MenuItemAcerca implements MenuItem {
     private final JMenuItem item;
 
-    public MenuItemCategorias(String text) {
+    public MenuItemAcerca(String text) {
         this.item = new JMenuItem(text);
-        CategoriasView view = new CategoriasView();
-        controller = new CtrlCategorias(view);
         this.item.addActionListener(this);
     }
 
@@ -32,7 +30,7 @@ public class MenuItemCategorias implements MenuItem {
     
     @Override
     public void actionPerformed(ActionEvent ae) {
-        controller.init();
+        UtilDialog.Information(null, "Sistema de ventas 1.0");
     }
     
 }

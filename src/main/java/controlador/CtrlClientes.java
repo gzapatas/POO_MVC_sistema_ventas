@@ -9,30 +9,26 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.AbstractAction;
-import javax.swing.DefaultComboBoxModel;
-import modelo.dao.CategoriasDAO;
-import modelo.dao.ProductosDAO;
-import modelo.db.Categorias;
-import modelo.db.Productos;
+import modelo.dao.ClientesDAO;
+import modelo.db.Clientes;
 import utilitarios.UtilDate;
 import utilitarios.UtilDialog;
 import utilitarios.UtilTable;
+import vista.ClientesView;
 import vista.MenuPrincipalView;
-import vista.ProductosView;
+
 
 /**
  *
  * @author gzapata
  */
-public class CtrlProductos extends AbstractAction {
-    private final ProductosView view;
-    private final ProductosDAO produtosDAO;
-    private final CategoriasDAO categoriasDAO;
+public class CtrlClientes extends AbstractAction{
+    private final ClientesView view;
+    private final ClientesDAO clientesDAO;
 
-    public CtrlProductos(ProductosView view) {
+    public CtrlClientes(ClientesView view) {
         this.view = view;
-        this.produtosDAO = new ProductosDAO();
-        this.categoriasDAO = new CategoriasDAO();
+        this.clientesDAO = new ClientesDAO();
     }
     
     public void init() {
@@ -47,7 +43,7 @@ public class CtrlProductos extends AbstractAction {
         
         MenuPrincipalView.getInstance().AddWindow(this.view);
         this.view.setVisible(true);
-        this.limpiar();
+        this.listar();
         this.setEstado(true);
     }
     
@@ -89,13 +85,15 @@ public class CtrlProductos extends AbstractAction {
     }
     
     public void crear() {
-        Productos item = new Productos();
+        Clientes item = new Clientes();
         
-        item.setNombre(view.nombreText.getText());
-        item.setSku(view.skuText.getText());
-        item.setDescripcion(view.descripcionText.getText());
-        Categorias cat = (Categorias)view.categoriaCombo.getSelectedItem();
-        item.setIdCategoria(cat.getIdCategoria());
+        item.setNombres(view.nombresText.getText());
+        item.setApellidos(view.apellidosText.getText());
+        item.setCelular(view.celularText.getText());
+        item.setDocumento(view.documentoText.getText());
+        item.setTelefono(view.telefonoText.getText());
+        String tipo = (String)view.tipoCombo.getSelectedItem();
+        item.setTipoDocumento(tipo);
         var dt = UtilDate.Now();
         item.setFecha(dt.getFecha());
         item.setFechaHora(dt.getFechaHora());
@@ -106,7 +104,7 @@ public class CtrlProductos extends AbstractAction {
             return;
         }
         
-        if(!produtosDAO.insertar(item)){
+        if(!clientesDAO.insertar(item)){
             UtilDialog.Error(view, "No se pudo agregar el registro");
             return;
         }
@@ -122,21 +120,23 @@ public class CtrlProductos extends AbstractAction {
             return;
         }
         
-        var item = produtosDAO.buscar(Long.parseLong(id));
+        var item = clientesDAO.buscar(Long.parseLong(id));
         
         UtilTable.ClearTable(view.table);
         
-        if(item.getIdProducto()== 0) {
+        if(item.getIdCliente()== 0) {
             return;
         }
         
         UtilTable.AddRow(view.table, new ArrayList<>(
             Arrays.asList(
-                item.getIdProducto(),
-                item.getSku(),
-                item.getNombre(),
-                item.getIdCategoria(),
-                item.getDescripcion()
+                item.getIdCliente(),
+                item.getNombres(),
+                item.getApellidos(),
+                item.getTelefono(),
+                item.getCelular(),
+                item.getTipoDocumento(),
+                item.getDocumento()
             )
         ));
         UtilTable.AddActions(view.table, this);
@@ -144,34 +144,29 @@ public class CtrlProductos extends AbstractAction {
     
     public void limpiar() {
         view.identificadorText.setText("");
-        view.nombreText.setText("");
-        view.skuText.setText("");
-        view.descripcionText.setText("");
-        
-        //Llenando el combo de categorias
-        var items = categoriasDAO.listar();
-        view.categoriaCombo.removeAllItems();
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        items.forEach(item -> {
-            model.addElement(item);
-        });
-        view.categoriaCombo.setModel(model);
-        
+        view.nombresText.setText("");
+        view.apellidosText.setText("");
+        view.telefonoText.setText("");
+        view.celularText.setText("");
+        view.documentoText.setText("");
+        view.tipoCombo.setSelectedIndex(0);
         this.listar();
     }
     
     public void listar() {
-        var items = produtosDAO.listar();
+        var items = clientesDAO.listar();
         
         UtilTable.ClearTable(view.table);
         items.forEach((item) -> {
             UtilTable.AddRow(view.table, new ArrayList<>(
                 Arrays.asList(
-                    item.getIdProducto(),
-                    item.getSku(),
-                    item.getNombre(),
-                    item.getIdCategoria(),
-                    item.getDescripcion()
+                    item.getIdCliente(),
+                    item.getNombres(),
+                    item.getApellidos(),
+                    item.getTelefono(),
+                    item.getCelular(),
+                    item.getTipoDocumento(),
+                    item.getDocumento()
                 )
             ));
         });
@@ -185,7 +180,7 @@ public class CtrlProductos extends AbstractAction {
         if(UtilDialog.Question(view, "¿Esta seguro que desea eliminar?")){
             var id = Long.valueOf(String.valueOf(items.get(0)));
             
-            if(!produtosDAO.eliminar(id)){
+            if(!clientesDAO.eliminar(id)){
                 UtilDialog.Error(view, "No se pudo eliminar el registro");
                 return;
             }
@@ -198,24 +193,12 @@ public class CtrlProductos extends AbstractAction {
     public void actualizar(int row) {
         var items = UtilTable.GetRow(view.table, row);
         view.identificadorText.setText(String.valueOf(items.get(0)));
-        view.nombreText.setText(String.valueOf(items.get(1)));
-        
-        view.skuText.setText(String.valueOf(items.get(1)));
-        view.nombreText.setText(String.valueOf(items.get(2)));
-        
-        var count = view.categoriaCombo.getItemCount();
-        
-        for (int i = 0; i < count; i++) {
-          Categorias cat = (Categorias)view.categoriaCombo.getItemAt(i);
-          long idCategoria = Long.valueOf(String.valueOf(items.get(3)));
-          
-          if(cat.getIdCategoria() == idCategoria){
-              view.categoriaCombo.setSelectedIndex(i);
-              break;
-          }
-        }
-
-        view.descripcionText.setText(String.valueOf(items.get(4)));
+        view.nombresText.setText(String.valueOf(items.get(1)));
+        view.apellidosText.setText(String.valueOf(items.get(2)));
+        view.telefonoText.setText(String.valueOf(items.get(3)));
+        view.celularText.setText(String.valueOf(items.get(4)));
+        view.tipoCombo.setSelectedItem(String.valueOf(items.get(5)));
+        view.documentoText.setText(String.valueOf(items.get(6)));
         
         this.setEstado(false);
     }
@@ -227,22 +210,23 @@ public class CtrlProductos extends AbstractAction {
     
     public void ejecutarGuardar() {
         if(UtilDialog.Question(view, "¿Esta seguro que desea actualizar?")){
-            Productos item = new Productos();
+            Clientes item = new Clientes();
             var id = Long.valueOf(view.identificadorText.getText());
             var dt = UtilDate.Now();
-            Categorias cat = (Categorias)view.categoriaCombo.getSelectedItem();
-            item.setIdCategoria(cat.getIdCategoria());
             
-            item.setIdProducto(id);
-            item.setSku(view.skuText.getText());
-            item.setNombre(view.nombreText.getText());
-            item.setIdCategoria(cat.getIdCategoria());
-            item.setDescripcion(view.descripcionText.getText());
+            item.setIdCliente(id);
+            item.setNombres(view.nombresText.getText());
+            item.setApellidos(view.apellidosText.getText());
+            item.setCelular(view.celularText.getText());
+            item.setDocumento(view.documentoText.getText());
+            item.setTelefono(view.telefonoText.getText());
+            String tipo = (String)view.tipoCombo.getSelectedItem();
+            item.setTipoDocumento(tipo);
             item.setFecha(dt.getFecha());
             item.setFechaHora(dt.getFechaHora());
             item.setTimestamp(dt.getTimestamp());
             
-            if(!produtosDAO.actualizar(item)){
+            if(!clientesDAO.actualizar(item)){
                 UtilDialog.Error(view, "No se pudo actualizar el registro");
                 return;
             }

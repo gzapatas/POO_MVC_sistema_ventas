@@ -10,7 +10,7 @@ package modelo.dao;
  * @author gzapata
  */
 
-import database.ConexionFactory;
+import modelo.db.ConexionFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,12 +23,12 @@ public class EmpleadosDAO extends ConexionFactory {
         Connection con = getConnection(ConexionFactory.MYSQL);
         String query = "SELECT apellidos,celular,documento,fecha,"
                 + "fechaHora,fechaNacimiento,idEmpleado,nombres,tipoEmpleado,"
-                + "telefono,timestamp, FROM Empleados";
+                + "telefono,timestamp FROM Empleados";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            ArrayList<Empleados> list = new ArrayList<Empleados>();
+            ArrayList<Empleados> list = new ArrayList<>();
             
             while(rs.next()) {
                 Empleados item = new Empleados();
@@ -36,9 +36,9 @@ public class EmpleadosDAO extends ConexionFactory {
                 item.setApellidos(rs.getString("apellidos"));
                 item.setCelular(rs.getString("celular"));
                 item.setDocumento(rs.getString("documento"));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
-                item.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
+                item.setFechaNacimiento(rs.getString("fechaNacimiento"));
                 item.setIdEmpleado(Long.parseLong(rs.getString("idEmpleado")));
                 item.setNombres(rs.getString("nombres"));
                 item.setTipoEmpleado(rs.getString("tipoEmpleado"));
@@ -79,9 +79,9 @@ public class EmpleadosDAO extends ConexionFactory {
                 item.setApellidos(rs.getString("apellidos"));
                 item.setCelular(rs.getString("celular"));
                 item.setDocumento(rs.getString("documento"));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
-                item.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
+                item.setFechaNacimiento(rs.getString("fechaNacimiento"));
                 item.setIdEmpleado(Long.parseLong(rs.getString("idEmpleado")));
                 item.setNombres(rs.getString("nombres"));
                 item.setTipoEmpleado(rs.getString("tipoEmpleado"));
@@ -110,7 +110,7 @@ public class EmpleadosDAO extends ConexionFactory {
         Connection con = getConnection(ConexionFactory.MYSQL);
         String query = "INSERT INTO Empleados(apellidos,celular,documento,tipoEmpleado,"
                 + "fecha,fechaHora,fechaNacimiento,nombres,telefono,timestamp)"
-                + " VALUES(?,?,?,?,?,?,?,?,?);";
+                + " VALUES(?,?,?,?,?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -121,9 +121,9 @@ public class EmpleadosDAO extends ConexionFactory {
             ps.setString(i++,item.getCelular());
             ps.setString(i++,item.getDocumento());
             ps.setString(i++,item.getTipoEmpleado());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
-            ps.setDate(i++,item.getFechaNacimiento());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
+            ps.setString(i++,item.getFechaNacimiento());
             ps.setString(i++,item.getNombres());
             ps.setString(i++,item.getTelefono());
             ps.setLong(i++,item.getTimestamp());
@@ -147,7 +147,7 @@ public class EmpleadosDAO extends ConexionFactory {
     
     public boolean actualizar(Empleados item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "UPDATE Empleados SET apellidos = ?,celular = ?,tipoEmpleado = ?"
+        String query = "UPDATE Empleados SET apellidos = ?,celular = ?,tipoEmpleado = ?,"
                 + "documento = ?,fecha = ?,fechaHora = ?,fechaNacimiento = ?,"
                 + "nombres = ?,telefono = ?,timestamp = ?"
                 + " WHERE idEmpleado = ?";
@@ -161,9 +161,9 @@ public class EmpleadosDAO extends ConexionFactory {
             ps.setString(i++,item.getCelular());
             ps.setString(i++,item.getTipoEmpleado());
             ps.setString(i++,item.getDocumento());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
-            ps.setDate(i++,item.getFechaNacimiento());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
+            ps.setString(i++,item.getFechaNacimiento());
             ps.setString(i++,item.getNombres());
             ps.setString(i++,item.getTelefono());
             ps.setLong(i++,item.getTimestamp());
