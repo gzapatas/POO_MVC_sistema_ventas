@@ -219,13 +219,11 @@ BEGIN
 	INSERT INTO Categorias(nombre,fecha,fechaHora,timestamp) VALUES(nombre,fecha,fechaHora,timestamp_);
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_editarcategoria(IN id INTEGER, IN nombre VARCHAR(100),IN fecha DATE,IN fechaHora DATETIME,IN timestamp_ BIGINT)
 BEGIN
 	UPDATE Categorias SET nombre = nombre,fecha = fecha, fechaHora = fechaHora,timestamp = timestamp_ WHERE idCategoria = id;
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_eliminarcategoria(IN id INTEGER)
 BEGIN
 	DELETE FROM Categorias WHERE idCategoria = id;
@@ -241,7 +239,6 @@ BEGIN
 	INSERT INTO Productos(sku,nombre,idCategoria,descripcion,fecha,fechaHora,timestamp) VALUES(sku,nombre,idCategoria,descripcion,fecha,fechaHora,timestamp);
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_editarproducto(IN id INTEGER, IN sku CHAR(15),IN nombre VARCHAR(100),IN idCategoria INTEGER, IN descripcion TEXT,
 	IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
 BEGIN
@@ -249,7 +246,6 @@ BEGIN
 		fecha = fecha,fechaHora = fechaHora,timestamp = timestamp WHERE idProducto = id;
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_eliminarproducto(IN id INTEGER)
 BEGIN
 	DELETE FROM Productos WHERE idProducto = id;
@@ -266,7 +262,6 @@ BEGIN
 		VALUES(idProducto,cantidad,precioUnitario,fecha,fechaHora,timestamp);
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_editarinventario(IN id INTEGER, IN idProducto INTEGER,IN cantidad INTEGER,IN precioUnitario DOUBLE,
 	IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
 BEGIN
@@ -274,7 +269,6 @@ BEGIN
 		fecha = fecha,fechaHora = fechaHora,timestamp = timestamp WHERE idInventario = id;
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_eliminarinventario(IN id INTEGER)
 BEGIN
 	DELETE FROM Inventario WHERE idInventario = id;
@@ -290,7 +284,6 @@ BEGIN
 		VALUES(apellidos,celular,documento,tipoEmpleado,fecha,fechaHora,fechaNacimiento,nombres,telefono,timestamp);
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_editarempleado(IN id INTEGER, IN nombres VARCHAR(50), IN apellidos VARCHAR(50),IN telefono CHAR(15),IN celular CHAR(15),
 	IN documento CHAR(15), IN tipoEmpleado CHAR(15), IN fechaNacimiento DATE, IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
 BEGIN
@@ -300,7 +293,6 @@ BEGIN
             WHERE idEmpleado = id;
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_eliminarempleado(IN id INTEGER)
 BEGIN
 	DELETE FROM Empleados WHERE idEmpleado = id;
@@ -316,7 +308,6 @@ BEGIN
 		VALUES(apellidos,celular,documento,tipoDocumento,fecha,fechaHora,fechaNacimiento,nombres,telefono,timestamp);
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_editarcliente(IN id INTEGER, IN nombres VARCHAR(50), IN apellidos VARCHAR(50),IN telefono CHAR(15),IN celular CHAR(15),
 	IN documento CHAR(15), IN tipoDocumento CHAR(10), IN fechaNacimiento DATE, IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
 BEGIN
@@ -326,7 +317,6 @@ BEGIN
             WHERE idCliente = id;
 END //
 
-DELIMITER //
 CREATE PROCEDURE sp_eliminarcliente(IN id INTEGER)
 BEGIN
 	DELETE FROM Clientes WHERE idCliente = id;
