@@ -92,10 +92,9 @@ public class CategoriasDAO extends ConexionFactory {
         }
     }
     
-    public boolean insertar(Categorias item){
+    public boolean sp_insertarcategoria(Categorias item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "INSERT INTO Categorias(nombre,fecha,fechaHora,timestamp)"
-                + " VALUES(?,?,?,?);";
+        String query = "CALL sp_insertarcategoria(?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -126,21 +125,20 @@ public class CategoriasDAO extends ConexionFactory {
         }
     }
     
-    public boolean actualizar(Categorias item){
+    public boolean sp_editarcategoria(Categorias item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "UPDATE Categorias SET nombre = ?,fecha = ?,"
-                + "fechaHora = ?,timestamp = ? WHERE idCategoria = ?";
+        String query = "CALL sp_editarcategoria(?,?,?,?,?)";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             
             int i = 1;
             
+            ps.setLong(i++,item.getIdCategoria());
             ps.setString(i++,item.getNombre());
             ps.setString(i++,item.getFecha());
             ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
-            ps.setLong(i++,item.getIdCategoria());
             
             ps.executeUpdate();
             ps.close();
@@ -159,9 +157,9 @@ public class CategoriasDAO extends ConexionFactory {
         }
     }
     
-    public boolean eliminar(long id){
+    public boolean sp_eliminarcategoria(long id){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "DELETE FROM Categorias WHERE idCategoria = ?";
+        String query = "CALL sp_eliminarcategoria(?)";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);

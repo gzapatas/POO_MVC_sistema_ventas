@@ -106,26 +106,24 @@ public class EmpleadosDAO extends ConexionFactory {
         }
     }
     
-    public boolean insertar(Empleados item){
+    public boolean sp_insertarempleado(Empleados item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "INSERT INTO Empleados(apellidos,celular,documento,tipoEmpleado,"
-                + "fecha,fechaHora,fechaNacimiento,nombres,telefono,timestamp)"
-                + " VALUES(?,?,?,?,?,?,?,?,?,?);";
+        String query = "CALL sp_insertarempleado(?,?,?,?,?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             
             int i = 1;
             
+            ps.setString(i++,item.getNombres());
             ps.setString(i++,item.getApellidos());
+            ps.setString(i++,item.getTelefono());
             ps.setString(i++,item.getCelular());
             ps.setString(i++,item.getDocumento());
             ps.setString(i++,item.getTipoEmpleado());
+            ps.setString(i++,item.getFechaNacimiento());
             ps.setString(i++,item.getFecha());
             ps.setString(i++,item.getFechaHora());
-            ps.setString(i++,item.getFechaNacimiento());
-            ps.setString(i++,item.getNombres());
-            ps.setString(i++,item.getTelefono());
             ps.setLong(i++,item.getTimestamp());
             
             ps.execute();
@@ -145,29 +143,27 @@ public class EmpleadosDAO extends ConexionFactory {
         }
     }
     
-    public boolean actualizar(Empleados item){
+    public boolean sp_editarempleado(Empleados item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "UPDATE Empleados SET apellidos = ?,celular = ?,tipoEmpleado = ?,"
-                + "documento = ?,fecha = ?,fechaHora = ?,fechaNacimiento = ?,"
-                + "nombres = ?,telefono = ?,timestamp = ?"
-                + " WHERE idEmpleado = ?";
+        String query = "CALL sp_editarempleado(?,?,?,?,?,?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             
             int i = 1;
             
+            ps.setLong(i++,item.getIdEmpleado());
+            ps.setString(i++,item.getNombres());
             ps.setString(i++,item.getApellidos());
+            ps.setString(i++,item.getTelefono());
             ps.setString(i++,item.getCelular());
-            ps.setString(i++,item.getTipoEmpleado());
             ps.setString(i++,item.getDocumento());
+            ps.setString(i++,item.getTipoEmpleado());
+            ps.setString(i++,item.getFechaNacimiento());
             ps.setString(i++,item.getFecha());
             ps.setString(i++,item.getFechaHora());
-            ps.setString(i++,item.getFechaNacimiento());
-            ps.setString(i++,item.getNombres());
-            ps.setString(i++,item.getTelefono());
             ps.setLong(i++,item.getTimestamp());
-            ps.setLong(i++,item.getIdEmpleado());
+            
             
             ps.executeUpdate();
             ps.close();
@@ -186,9 +182,9 @@ public class EmpleadosDAO extends ConexionFactory {
         }
     }
     
-    public boolean eliminar(long id){
+    public boolean sp_eliminarempleado(long id){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "DELETE FROM Empleados WHERE idEmpleado = ?";
+        String query = "CALL sp_eliminarempleado(?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);

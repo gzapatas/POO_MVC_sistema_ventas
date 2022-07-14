@@ -104,7 +104,7 @@ public class CtrlEmpleados extends AbstractAction{
             return;
         }
         
-        if(!empleadosDAO.insertar(item)){
+        if(!empleadosDAO.sp_insertarempleado(item)){
             UtilDialog.Error(view, "No se pudo agregar el registro");
             return;
         }
@@ -180,7 +180,7 @@ public class CtrlEmpleados extends AbstractAction{
         if(UtilDialog.Question(view, "¿Esta seguro que desea eliminar?")){
             var id = Long.valueOf(String.valueOf(items.get(0)));
             
-            if(!empleadosDAO.eliminar(id)){
+            if(!empleadosDAO.sp_eliminarempleado(id)){
                 UtilDialog.Error(view, "No se pudo eliminar el registro");
                 return;
             }
@@ -226,7 +226,7 @@ public class CtrlEmpleados extends AbstractAction{
             item.setFechaHora(dt.getFechaHora());
             item.setTimestamp(dt.getTimestamp());
             
-            if(!empleadosDAO.actualizar(item)){
+            if(!empleadosDAO.sp_editarempleado(item)){
                 UtilDialog.Error(view, "No se pudo actualizar el registro");
                 return;
             }

@@ -106,11 +106,9 @@ public class ClientesDAO extends ConexionFactory {
         }
     }
     
-    public boolean insertar(Clientes item){
+    public boolean sp_insertarcliente(Clientes item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "INSERT INTO Clientes(nombres,apellidos,telefono,celular,"
-                + "tipoDocumento,documento,fechaNacimiento,fecha,fechaHora,timestamp)"
-                + " VALUES(?,?,?,?,?,?,?,?,?,?);";
+        String query = "CALL sp_insertarcliente(?,?,?,?,?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -121,8 +119,8 @@ public class ClientesDAO extends ConexionFactory {
             ps.setString(i++,item.getApellidos());
             ps.setString(i++,item.getTelefono());
             ps.setString(i++,item.getCelular());
-            ps.setString(i++,item.getTipoDocumento());
             ps.setString(i++,item.getDocumento());
+            ps.setString(i++,item.getTipoDocumento());
             ps.setString(i++,item.getFechaNacimiento());
             ps.setString(i++,item.getFecha());
             ps.setString(i++,item.getFechaHora());
@@ -144,29 +142,26 @@ public class ClientesDAO extends ConexionFactory {
         }
     }
     
-    public boolean actualizar(Clientes item){
+    public boolean sp_editarcliente(Clientes item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "UPDATE Clientes SET nombres = ?,apellidos = ?,"
-                + "telefono = ?,celular = ?,tipoDocumento = ?,documento = ?,"
-                + "fechaNacimiento = ?,fecha = ?,fechaHora = ?,timestamp = ?"
-                + " WHERE idCliente = ?";
+        String query = "CALL sp_editarcliente(?,?,?,?,?,?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             
             int i = 1;
             
+            ps.setLong(i++,item.getIdCliente());
             ps.setString(i++,item.getNombres());
             ps.setString(i++,item.getApellidos());
             ps.setString(i++,item.getTelefono());
             ps.setString(i++,item.getCelular());
-            ps.setString(i++,item.getTipoDocumento());
             ps.setString(i++,item.getDocumento());
+            ps.setString(i++,item.getTipoDocumento());
             ps.setString(i++,item.getFechaNacimiento());
             ps.setString(i++,item.getFecha());
             ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
-            ps.setLong(i++,item.getIdCliente());
             
             ps.executeUpdate();
             ps.close();
@@ -184,9 +179,9 @@ public class ClientesDAO extends ConexionFactory {
         }
     }
     
-    public boolean eliminar(long id){
+    public boolean sp_eliminarcliente(long id){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "DELETE FROM Clientes WHERE idCliente = ?";
+        String query = "CALL sp_eliminarcliente(?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);

@@ -118,7 +118,7 @@ public class CtrlInventario extends AbstractAction {
             return;
         }
         
-        if(!inventarioDAO.insertar(item)){
+        if(!inventarioDAO.sp_insertarinventario(item)){
             UtilDialog.Error(view, "No se pudo agregar el registro");
             return;
         }
@@ -207,7 +207,7 @@ public class CtrlInventario extends AbstractAction {
         if(UtilDialog.Question(view, "¿Esta seguro que desea eliminar?")){
             var id = Long.valueOf(String.valueOf(items.get(0)));
             
-            if(!inventarioDAO.eliminar(id)){
+            if(!inventarioDAO.sp_eliminarinventario(id)){
                 UtilDialog.Error(view, "No se pudo eliminar el registro");
                 return;
             }
@@ -274,7 +274,7 @@ public class CtrlInventario extends AbstractAction {
             item.setFechaHora(dt.getFechaHora());
             item.setTimestamp(dt.getTimestamp());
             
-            if(!inventarioDAO.actualizar(item)){
+            if(!inventarioDAO.sp_editarinventario(item)){
                 UtilDialog.Error(view, "No se pudo actualizar el registro");
                 return;
             }

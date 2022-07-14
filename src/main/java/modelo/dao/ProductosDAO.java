@@ -142,11 +142,9 @@ public class ProductosDAO extends ConexionFactory {
         }
     }
     
-    public boolean insertar(Productos item){
+    public boolean sp_insertarproducto(Productos item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "INSERT INTO Productos(sku,nombre,idCategoria,descripcion,"
-                + "fecha,fechaHora,timestamp)"
-                + " VALUES(?,?,?,?,?,?,?);";
+        String query = "CALL sp_insertarproducto(?,?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -174,22 +172,19 @@ public class ProductosDAO extends ConexionFactory {
             } catch(SQLException ex) {
                 System.err.println(ex);
             }
-            
         }
     }
     
-    public boolean actualizar(Productos item){
+    public boolean sp_editarproducto(Productos item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "UPDATE Productos SET sku = ?,nombre = ?,"
-                + "idCategoria = ?,descripcion = ?,"
-                + "fecha = ?,fechaHora = ?,timestamp = ?"
-                + " WHERE idProducto = ?";
+        String query = "CALL sp_editarproducto(?,?,?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             
             int i = 1;
             
+            ps.setLong(i++,item.getIdProducto());
             ps.setString(i++,item.getSku());
             ps.setString(i++,item.getNombre());
             ps.setLong(i++,item.getIdCategoria());
@@ -197,7 +192,6 @@ public class ProductosDAO extends ConexionFactory {
             ps.setString(i++,item.getFecha());
             ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
-            ps.setLong(i++,item.getIdProducto());
             
             ps.executeUpdate();
             ps.close();
@@ -215,9 +209,9 @@ public class ProductosDAO extends ConexionFactory {
         }
     }
     
-    public boolean eliminar(long id){
+    public boolean sp_eliminarproducto(long id){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "DELETE FROM Productos WHERE idProducto = ?";
+        String query = "CALL sp_eliminarproducto(?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);

@@ -211,3 +211,123 @@ ALTER TABLE SistemaVentasDB.OrdenDetalles ADD INDEX idxIdProducto (idProducto);
 ALTER TABLE SistemaVentasDB.OrdenDetalles ADD INDEX idxFecha (fecha);
 ALTER TABLE SistemaVentasDB.OrdenDetalles ADD INDEX idxFechaHora (fechaHora);
 ALTER TABLE SistemaVentasDB.OrdenDetalles ADD INDEX idxTimestamp (timestamp);
+
+
+DELIMITER //
+CREATE PROCEDURE sp_insertarcategoria(IN nombre VARCHAR(100),IN fecha DATE,IN fechaHora DATETIME,IN timestamp_ BIGINT)
+BEGIN
+	INSERT INTO Categorias(nombre,fecha,fechaHora,timestamp) VALUES(nombre,fecha,fechaHora,timestamp_);
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_editarcategoria(IN id INTEGER, IN nombre VARCHAR(100),IN fecha DATE,IN fechaHora DATETIME,IN timestamp_ BIGINT)
+BEGIN
+	UPDATE Categorias SET nombre = nombre,fecha = fecha, fechaHora = fechaHora,timestamp = timestamp_ WHERE idCategoria = id;
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_eliminarcategoria(IN id INTEGER)
+BEGIN
+	DELETE FROM Categorias WHERE idCategoria = id;
+END //
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE sp_insertarproducto(IN sku CHAR(15),IN nombre VARCHAR(100),IN idCategoria INTEGER, IN descripcion TEXT,
+	IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
+BEGIN
+	INSERT INTO Productos(sku,nombre,idCategoria,descripcion,fecha,fechaHora,timestamp) VALUES(sku,nombre,idCategoria,descripcion,fecha,fechaHora,timestamp);
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_editarproducto(IN id INTEGER, IN sku CHAR(15),IN nombre VARCHAR(100),IN idCategoria INTEGER, IN descripcion TEXT,
+	IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
+BEGIN
+	UPDATE Productos SET sku = sku,nombre = nombre,idCategoria = idCategoria,descripcion = descripcion,
+		fecha = fecha,fechaHora = fechaHora,timestamp = timestamp WHERE idProducto = id;
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_eliminarproducto(IN id INTEGER)
+BEGIN
+	DELETE FROM Productos WHERE idProducto = id;
+END //
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE sp_insertarinventario(IN idProducto INTEGER,IN cantidad INTEGER,IN precioUnitario DOUBLE,
+	IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
+BEGIN
+	INSERT INTO Inventario(idProducto,cantidad,precioUnitario,fecha,fechaHora,timestamp) 
+		VALUES(idProducto,cantidad,precioUnitario,fecha,fechaHora,timestamp);
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_editarinventario(IN id INTEGER, IN idProducto INTEGER,IN cantidad INTEGER,IN precioUnitario DOUBLE,
+	IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
+BEGIN
+	UPDATE Inventario SET idProducto = idProducto,cantidad = cantidad,precioUnitario = precioUnitario,
+		fecha = fecha,fechaHora = fechaHora,timestamp = timestamp WHERE idInventario = id;
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_eliminarinventario(IN id INTEGER)
+BEGIN
+	DELETE FROM Inventario WHERE idInventario = id;
+END //
+
+
+
+DELIMITER //
+CREATE PROCEDURE sp_insertarempleado(IN nombres VARCHAR(50), IN apellidos VARCHAR(50),IN telefono CHAR(15),IN celular CHAR(15),
+	IN documento CHAR(15), IN tipoEmpleado CHAR(15), IN fechaNacimiento DATE, IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
+BEGIN
+	INSERT INTO Empleados(apellidos,celular,documento,tipoEmpleado,fecha,fechaHora,fechaNacimiento,nombres,telefono,timestamp) 
+		VALUES(apellidos,celular,documento,tipoEmpleado,fecha,fechaHora,fechaNacimiento,nombres,telefono,timestamp);
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_editarempleado(IN id INTEGER, IN nombres VARCHAR(50), IN apellidos VARCHAR(50),IN telefono CHAR(15),IN celular CHAR(15),
+	IN documento CHAR(15), IN tipoEmpleado CHAR(15), IN fechaNacimiento DATE, IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
+BEGIN
+	UPDATE Empleados SET apellidos = apellidos,celular = celular,tipoEmpleado = tipoEmpleado,
+			documento = documento,fecha = fecha,fechaHora = fechaHora,fechaNacimiento = fechaNacimiento,
+			nombres = nombres,telefono = telefono,timestamp = timestamp
+            WHERE idEmpleado = id;
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_eliminarempleado(IN id INTEGER)
+BEGIN
+	DELETE FROM Empleados WHERE idEmpleado = id;
+END //
+
+
+
+DELIMITER //
+CREATE PROCEDURE sp_insertarcliente(IN nombres VARCHAR(50), IN apellidos VARCHAR(50),IN telefono CHAR(15),IN celular CHAR(15),
+	IN documento CHAR(15), IN tipoDocumento CHAR(10), IN fechaNacimiento DATE, IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
+BEGIN
+	INSERT INTO Clientes(apellidos,celular,documento,tipoDocumento,fecha,fechaHora,fechaNacimiento,nombres,telefono,timestamp) 
+		VALUES(apellidos,celular,documento,tipoDocumento,fecha,fechaHora,fechaNacimiento,nombres,telefono,timestamp);
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_editarcliente(IN id INTEGER, IN nombres VARCHAR(50), IN apellidos VARCHAR(50),IN telefono CHAR(15),IN celular CHAR(15),
+	IN documento CHAR(15), IN tipoDocumento CHAR(10), IN fechaNacimiento DATE, IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
+BEGIN
+	UPDATE Clientes SET apellidos = apellidos,celular = celular,tipoDocumento = tipoDocumento,
+			documento = documento,fecha = fecha,fechaHora = fechaHora,fechaNacimiento = fechaNacimiento,
+			nombres = nombres,telefono = telefono,timestamp = timestamp
+            WHERE idCliente = id;
+END //
+
+DELIMITER //
+CREATE PROCEDURE sp_eliminarcliente(IN id INTEGER)
+BEGIN
+	DELETE FROM Clientes WHERE idCliente = id;
+END //

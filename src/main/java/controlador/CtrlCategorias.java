@@ -98,7 +98,7 @@ public class CtrlCategorias extends AbstractAction{
             return;
         }
         
-        if(!categoriasDAO.insertar(item)){
+        if(!categoriasDAO.sp_insertarcategoria(item)){
             UtilDialog.Error(view, "No se pudo agregar el registro");
             return;
         }
@@ -165,7 +165,7 @@ public class CtrlCategorias extends AbstractAction{
         if(UtilDialog.Question(view, "¿Esta seguro que desea eliminar?")){
             var id = Long.valueOf(String.valueOf(items.get(0)));
             
-            if(!categoriasDAO.eliminar(id)){
+            if(!categoriasDAO.sp_eliminarcategoria(id)){
                 UtilDialog.Error(view, "No se pudo eliminar el registro");
                 return;
             }
@@ -200,7 +200,7 @@ public class CtrlCategorias extends AbstractAction{
             item.setFechaHora(dt.getFechaHora());
             item.setTimestamp(dt.getTimestamp());
             
-            if(!categoriasDAO.actualizar(item)){
+            if(!categoriasDAO.sp_editarcategoria(item)){
                 UtilDialog.Error(view, "No se pudo actualizar el registro");
                 return;
             }

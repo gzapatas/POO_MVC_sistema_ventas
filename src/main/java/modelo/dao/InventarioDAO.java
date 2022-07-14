@@ -103,11 +103,9 @@ public class InventarioDAO extends ConexionFactory {
         }
     }
     
-    public boolean insertar(Inventario item){
+    public boolean sp_insertarinventario(Inventario item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "INSERT INTO Inventario(idProducto,cantidad,precioUnitario,"
-                + "fecha,fechaHora,timestamp)"
-                + " VALUES(?,?,?,?,?,?);";
+        String query = "CALL sp_insertarinventario(?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -134,29 +132,26 @@ public class InventarioDAO extends ConexionFactory {
             } catch(SQLException ex) {
                 System.err.println(ex);
             }
-            
         }
     }
     
-    public boolean actualizar(Inventario item){
+    public boolean sp_editarinventario(Inventario item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "UPDATE Inventario SET idProducto = ?,cantidad = ?,"
-                + "precioUnitario = ?,fecha = ?,fechaHora = ?,timestamp = ?"
-                + " WHERE idInventario = ?";
+        String query = "CALL sp_editarinventario(?,?,?,?,?,?,?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             
             int i = 1;
             
+            ps.setLong(i++,item.getIdInventario());
             ps.setLong(i++,item.getIdProducto());
             ps.setInt(i++,item.getCantidad());
             ps.setDouble(i++,item.getPrecioUnitario());
             ps.setString(i++,item.getFecha());
             ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
-            ps.setLong(i++,item.getIdInventario());
-            
+
             ps.executeUpdate();
             ps.close();
             return true;
@@ -173,9 +168,9 @@ public class InventarioDAO extends ConexionFactory {
         }
     }
     
-    public boolean eliminar(long id){
+    public boolean sp_eliminarinventario(long id){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "DELETE FROM Inventario WHERE idInventario = ?";
+        String query = "CALL sp_eliminarinventario(?);";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
