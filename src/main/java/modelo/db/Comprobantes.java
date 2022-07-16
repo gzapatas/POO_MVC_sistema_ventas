@@ -19,8 +19,8 @@ public class Comprobantes {
     private String codigo;
     private double subTotal;
     private double impuesto;
-    private Date fecha;
-    private Date fechaHora;
+    private String fecha;
+    private String fechaHora;
     private long timestamp;
 
     public long getIdComprobante() {
@@ -71,19 +71,19 @@ public class Comprobantes {
         this.impuesto = impuesto;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFechaHora() {
+    public String getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
 

@@ -39,8 +39,8 @@ public class ComprobantesDAO extends ConexionFactory {
                 item.setCodigo(rs.getString("codigo"));
                 item.setSubTotal(Double.parseDouble(rs.getString("subTotal")));
                 item.setImpuesto(Double.parseDouble(rs.getString("impuesto")));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 list.add(item);
@@ -80,8 +80,8 @@ public class ComprobantesDAO extends ConexionFactory {
                 item.setCodigo(rs.getString("codigo"));
                 item.setSubTotal(Double.parseDouble(rs.getString("subTotal")));
                 item.setImpuesto(Double.parseDouble(rs.getString("impuesto")));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 break;
@@ -118,8 +118,8 @@ public class ComprobantesDAO extends ConexionFactory {
             ps.setString(i++,item.getCodigo());
             ps.setDouble(i++,item.getSubTotal());
             ps.setDouble(i++,item.getImpuesto());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             
             ps.execute();
@@ -155,8 +155,8 @@ public class ComprobantesDAO extends ConexionFactory {
             ps.setString(i++,item.getCodigo());
             ps.setDouble(i++,item.getSubTotal());
             ps.setDouble(i++,item.getImpuesto());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             ps.setLong(i++,item.getIdComprobante());
             

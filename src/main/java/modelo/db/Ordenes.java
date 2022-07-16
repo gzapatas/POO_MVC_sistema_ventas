@@ -18,8 +18,8 @@ public class Ordenes {
     private long idCajero;
     private double montoTotal;
     private double descuento;
-    private Date fecha;
-    private Date fechaHora;
+    private String fecha;
+    private String fechaHora;
     private long timestamp;
 
     public long getIdOrden() {
@@ -38,11 +38,11 @@ public class Ordenes {
         this.idCliente = idCliente;
     }
 
-    public long getIdCajero() {
+    public long getIdEmpleado() {
         return idCajero;
     }
 
-    public void setIdCajero(long idCajero) {
+    public void setIdEmpleado(long idCajero) {
         this.idCajero = idCajero;
     }
 
@@ -62,19 +62,19 @@ public class Ordenes {
         this.descuento = descuento;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFechaHora() {
+    public String getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
 

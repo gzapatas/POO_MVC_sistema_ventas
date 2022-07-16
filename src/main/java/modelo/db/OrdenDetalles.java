@@ -19,8 +19,8 @@ public class OrdenDetalles {
     private int cantidad;
     private double precioUnitario;
     private double precioTotal;
-    private Date fecha;
-    private Date fechaHora;
+    private String fecha;
+    private String fechaHora;
     private long timestamp;
 
     public long getIdDetalle() {
@@ -71,19 +71,19 @@ public class OrdenDetalles {
         this.precioTotal = precioTotal;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Date getFechaHora() {
+    public String getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Date fechaHora) {
+    public void setFechaHora(String fechaHora) {
         this.fechaHora = fechaHora;
     }
 

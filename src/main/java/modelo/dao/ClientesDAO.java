@@ -105,6 +105,49 @@ public class ClientesDAO extends ConexionFactory {
             }
         }
     }
+   
+    public Clientes buscarPorDocumento(String documento){
+        Connection con = getConnection(ConexionFactory.MYSQL);
+        String query = "SELECT idCliente,nombres,apellidos,telefono,celular,"
+                + "tipoDocumento,documento,fechaNacimiento,fecha,fechaHora,timestamp"
+                + " FROM Clientes WHERE documento = ? LIMIT 1";
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1,documento);
+            ResultSet rs = ps.executeQuery();
+            Clientes item = new Clientes();
+            
+            while(rs.next()) {                
+                item.setIdCliente(Long.parseLong(rs.getString("idCliente")));
+                item.setNombres(rs.getString("nombres"));
+                item.setApellidos(rs.getString("apellidos"));
+                item.setTelefono(rs.getString("telefono"));
+                item.setCelular(rs.getString("celular"));
+                item.setTipoDocumento(rs.getString("tipoDocumento"));
+                item.setDocumento(rs.getString("documento"));
+                item.setFechaNacimiento(rs.getString("fechaNacimiento"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
+                item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
+                
+                break;
+            }
+            
+            ps.close();
+            return item;
+        } catch(SQLException ex) {
+            System.err.println(ex);
+            return null;
+        }
+        finally {
+            try {
+                con.close();
+            } catch(SQLException ex) {
+                System.err.println(ex);
+            }
+        }
+    }
     
     public boolean sp_insertarcliente(Clientes item){
         Connection con = getConnection(ConexionFactory.MYSQL);

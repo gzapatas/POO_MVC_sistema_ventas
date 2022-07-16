@@ -39,8 +39,8 @@ public class OrdenDetallesDAO extends ConexionFactory {
                 item.setCantidad(Integer.parseInt(rs.getString("cantidad")));
                 item.setPrecioUnitario(Double.parseDouble(rs.getString("precioUnitario")));
                 item.setPrecioTotal(Double.parseDouble(rs.getString("precioTotal")));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 list.add(item);
@@ -80,8 +80,8 @@ public class OrdenDetallesDAO extends ConexionFactory {
                 item.setCantidad(Integer.parseInt(rs.getString("cantidad")));
                 item.setPrecioUnitario(Double.parseDouble(rs.getString("precioUnitario")));
                 item.setPrecioTotal(Double.parseDouble(rs.getString("precioTotal")));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 break;
@@ -118,8 +118,8 @@ public class OrdenDetallesDAO extends ConexionFactory {
             ps.setInt(i++,item.getCantidad());
             ps.setDouble(i++,item.getPrecioUnitario());
             ps.setDouble(i++,item.getPrecioTotal());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             
             ps.execute();
@@ -156,8 +156,8 @@ public class OrdenDetallesDAO extends ConexionFactory {
             ps.setInt(i++,item.getCantidad());
             ps.setDouble(i++,item.getPrecioUnitario());
             ps.setDouble(i++,item.getPrecioTotal());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             ps.setLong(i++,item.getIdDetalle());
             

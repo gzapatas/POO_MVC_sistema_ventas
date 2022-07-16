@@ -56,4 +56,14 @@ public class UtilTable {
         
         return rowItems;
     }
+    
+    public static void RemoveRow(JTable table, int row){
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        if(model.getRowCount() <= row){
+            return;
+        }
+        
+        model.removeRow(row);
+    }
 }

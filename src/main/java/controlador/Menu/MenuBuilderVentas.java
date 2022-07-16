@@ -23,8 +23,7 @@ public class MenuBuilderVentas extends MenuBuilder {
     public void buildSubMenus() {
         ArrayList<JMenuItem> menuItems = new ArrayList<>();
         
-        menuItems.add(MenuItemFactory.getMenuItem(MenuItemFactory.BOLETA).getItem());
-        menuItems.add(MenuItemFactory.getMenuItem(MenuItemFactory.FACTURA).getItem());
+        menuItems.add(MenuItemFactory.getMenuItem(MenuItemFactory.VENTAS).getItem());
         
         menu.setSubMenus(menuItems);
     }

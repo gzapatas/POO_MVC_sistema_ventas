@@ -15,8 +15,7 @@ public class MenuItemFactory {
     public static String INVENTARIO = "Inventario";
     public static String CATEGORIAS = "Categorias";
     public static String EMPLEADOS = "Empleados";
-    public static String BOLETA = "Boleta";
-    public static String FACTURA = "Factura";
+    public static String VENTAS = "Ventas";
     public static String ACERCA = "Acerca";
     public static String CLIENTES = "Clientes";
     
@@ -33,10 +32,8 @@ public class MenuItemFactory {
                 return new MenuItemEmpleados(key);
             case "Clientes":
                 return new MenuItemClientes(key);
-            case "Boleta":
-                return new MenuItemProductos(key);
-            case "Factura":
-                return new MenuItemProductos(key);
+            case "Ventas":
+                return new MenuItemVentas(key);
             case "Acerca":
                 return new MenuItemAcerca(key);
             default:

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import modelo.db.Ordenes;
 
@@ -21,7 +22,7 @@ import modelo.db.Ordenes;
 public class OrdenesDAO extends ConexionFactory {
     public ArrayList<Ordenes> listar(){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "SELECT idOrden,idCliente,idCajero,montoTotal,"
+        String query = "SELECT idOrden,idCliente,idEmpleado,montoTotal,"
                 + "descuento,fecha,fechaHora,timestamp"
                 + " FROM Ordenes";
         
@@ -35,11 +36,11 @@ public class OrdenesDAO extends ConexionFactory {
                 
                 item.setIdOrden(Long.parseLong(rs.getString("idOrden")));
                 item.setIdCliente(Long.parseLong(rs.getString("idCliente")));
-                item.setIdCajero(Long.parseLong(rs.getString("idCajero")));
+                item.setIdEmpleado(Long.parseLong(rs.getString("idEmpleado")));
                 item.setMontoTotal(Double.parseDouble(rs.getString("montoTotal")));
                 item.setDescuento(Double.parseDouble(rs.getString("descuento")));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 list.add(item);
@@ -62,7 +63,7 @@ public class OrdenesDAO extends ConexionFactory {
     
     public Ordenes buscar(long id){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "SELECT idOrden,idCliente,idCajero,montoTotal,"
+        String query = "SELECT idOrden,idCliente,idEmpleado,montoTotal,"
                 + "descuento,fecha,fechaHora,timestamp FROM Ordenes"
                 + " WHERE idOrden = ? LIMIT 1";
         
@@ -75,11 +76,11 @@ public class OrdenesDAO extends ConexionFactory {
             while(rs.next()) {                
                 item.setIdOrden(Long.parseLong(rs.getString("idOrden")));
                 item.setIdCliente(Long.parseLong(rs.getString("idCliente")));
-                item.setIdCajero(Long.parseLong(rs.getString("idCajero")));
+                item.setIdEmpleado(Long.parseLong(rs.getString("idEmpleado")));
                 item.setMontoTotal(Double.parseDouble(rs.getString("montoTotal")));
                 item.setDescuento(Double.parseDouble(rs.getString("descuento")));
-                item.setFecha(rs.getDate("fecha"));
-                item.setFechaHora(rs.getDate("fechaHora"));
+                item.setFecha(rs.getString("fecha"));
+                item.setFechaHora(rs.getString("fechaHora"));
                 item.setTimestamp(Long.parseLong(rs.getString("timestamp")));
                 
                 break;
@@ -100,31 +101,38 @@ public class OrdenesDAO extends ConexionFactory {
         }
     }
     
-    public boolean insertar(Ordenes item){
+    public long insertar(Ordenes item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "INSERT INTO Ordenes(idCliente,idCajero,"
+        String query = "INSERT INTO Ordenes(idCliente,idEmpleado,"
                 + "montoTotal,descuento,fecha,fechaHora,timestamp)"
-                + " VALUES(?,?,?,?,?,?,?,?);";
+                + " VALUES(?,?,?,?,?,?,?);";
         
         try {
-            PreparedStatement ps = con.prepareStatement(query);
+            PreparedStatement ps = con.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
             
             int i = 1;
             
             ps.setLong(i++,item.getIdCliente());
-            ps.setLong(i++,item.getIdCajero());
+            ps.setLong(i++,item.getIdEmpleado());
             ps.setDouble(i++,item.getMontoTotal());
             ps.setDouble(i++,item.getDescuento());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             
-            ps.execute();
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            long id = 0;
+            while(rs.next()) {   
+                id = rs.getLong(1);
+                break;
+            }
+            
             ps.close();
-            return true;
+            return id;
         } catch(SQLException ex) {
             System.err.println(ex);
-            return false;
+            return 0;
         }
         finally {
             try {
@@ -138,7 +146,7 @@ public class OrdenesDAO extends ConexionFactory {
     
     public boolean actualizar(Ordenes item){
         Connection con = getConnection(ConexionFactory.MYSQL);
-        String query = "UPDATE Ordenes SET idCliente = ?,idCajero = ?,"
+        String query = "UPDATE Ordenes SET idCliente = ?,idEmpleado = ?,"
                 + "montoTotal = ?,descuento = ?,"
                 + "fecha = ?,fechaHora = ?,timestamp = ?"
                 + " WHERE idOrden = ?";
@@ -149,11 +157,11 @@ public class OrdenesDAO extends ConexionFactory {
             int i = 1;
             
             ps.setLong(i++,item.getIdCliente());
-            ps.setLong(i++,item.getIdCajero());
+            ps.setLong(i++,item.getIdEmpleado());
             ps.setDouble(i++,item.getMontoTotal());
             ps.setDouble(i++,item.getDescuento());
-            ps.setDate(i++,item.getFecha());
-            ps.setDate(i++,item.getFechaHora());
+            ps.setString(i++,item.getFecha());
+            ps.setString(i++,item.getFechaHora());
             ps.setLong(i++,item.getTimestamp());
             ps.setLong(i++,item.getIdOrden());
             
