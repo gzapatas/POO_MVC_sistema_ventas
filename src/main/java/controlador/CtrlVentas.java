@@ -59,9 +59,6 @@ public class CtrlVentas extends AbstractAction {
         this.comprobantesDAO = new ComprobantesDAO();
         this.ordenesDAO = new OrdenesDAO();
         this.clientesDAO = new ClientesDAO();
-    }
-    
-    public void init() {
         this.view.btnAgregar.addActionListener(this);
         this.view.btnBuscar.addActionListener(this);
         this.view.categoriaCombo.addActionListener(this);
@@ -72,13 +69,14 @@ public class CtrlVentas extends AbstractAction {
             int cantidad = (Integer)view.cantidadSpinner.getValue();
             view.labelTotalAmount.setText(String.format("%.2f", cantidad * monto));
         });
-        
         this.view.btnAgregar.setActionCommand("CREATE");
         this.view.btnBuscar.setActionCommand("SEARCH");
         this.view.btnGuardar.setActionCommand("SAVE");
         this.view.categoriaCombo.setActionCommand("CATEGORIACOMBO");
         this.view.productoCombo.setActionCommand("PRODUCTOCOMBO");
-        
+    }
+    
+    public void init() {
         MenuPrincipalView.getInstance().AddWindow(this.view);
         this.view.setVisible(true);
         this.limpiar();
@@ -290,6 +288,7 @@ public class CtrlVentas extends AbstractAction {
                 comprobante.setTipo("Boleta");
             }
             
+            message += String.format("\n%s %s\n",comprobante.getTipo(),comprobante.getCodigo());
             message += String.format("\nSubTotal %.2f\n",comprobante.getSubTotal());
             message += String.format("Impuesto %.2f\n",comprobante.getImpuesto());
             message += String.format("Total %.2f\n",totalVenta);

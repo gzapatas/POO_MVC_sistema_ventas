@@ -37,9 +37,6 @@ public class CtrlInventario extends AbstractAction {
         this.produtosDAO = new ProductosDAO();
         this.inventarioDAO = new InventarioDAO();
         this.categoriasDAO = new CategoriasDAO();
-    }
-    
-    public void init() {
         this.view.btnAgregar.addActionListener(this);
         this.view.btnBuscar.addActionListener(this);
         this.view.btnList.addActionListener(this);
@@ -50,7 +47,9 @@ public class CtrlInventario extends AbstractAction {
         this.view.btnList.setActionCommand("LIST");
         this.view.btnGuardar.setActionCommand("SAVE");
         this.view.categoriaCombo.setActionCommand("CATEGORIACOMBO");
-        
+    }
+    
+    public void init() {
         MenuPrincipalView.getInstance().AddWindow(this.view);
         this.view.setVisible(true);
         this.limpiar();

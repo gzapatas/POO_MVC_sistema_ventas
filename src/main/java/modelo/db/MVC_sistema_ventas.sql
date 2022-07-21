@@ -8,9 +8,22 @@
  * Created: Jun 10, 2022
  */
 DROP DATABASE IF EXISTS SistemaVentasDB;
-CREATE DATABASE SistemaVentasDB
-CHARACTER SET utf8mb4
-COLLATE utf8mb4_general_ci;
+CREATE DATABASE SistemaVentasDB;
+
+USE SistemaVentasDB;
+
+CREATE TABLE SistemaVentasDB.Usuarios (
+  idUsuario INTEGER UNSIGNED AUTO_INCREMENT NOT NULL COMMENT 'Id de usuario',
+  username CHAR(20) NOT NULL COMMENT 'Usuario',
+  pass CHAR(50) NOT NULL COMMENT 'Contraseña',
+  fecha DATE DEFAULT NULL COMMENT 'Fecha registro',
+  fechaHora DATETIME DEFAULT NULL COMMENT 'Fecha Hora registro',
+  timestamp BIGINT DEFAULT NULL COMMENT 'Epoch registro',
+  PRIMARY KEY (idUsuario)
+)
+ENGINE = INNODB,
+COMMENT='Tabla de usuarios';
+
 
 CREATE TABLE SistemaVentasDB.Empleados (
   idEmpleado INTEGER UNSIGNED AUTO_INCREMENT NOT NULL COMMENT 'Id de empleado',
@@ -20,15 +33,15 @@ CREATE TABLE SistemaVentasDB.Empleados (
   celular CHAR(15) NOT NULL COMMENT 'Celular',
   documento CHAR(15) NOT NULL COMMENT 'Documento de identidad',
   tipoEmpleado CHAR(20) NOT NULL COMMENT 'Tipo empleado CAJERO/ADMINISTRADOR',
+  idUsuario INTEGER UNSIGNED NOT NULL,
   fechaNacimiento DATE DEFAULT NULL COMMENT 'Fecha de nacimiento',
   fecha DATE DEFAULT NULL COMMENT 'Fecha registro',
   fechaHora DATETIME DEFAULT NULL COMMENT 'Fecha Hora registro',
   timestamp BIGINT DEFAULT NULL COMMENT 'Epoch registro',
-  PRIMARY KEY (idEmpleado)
+  PRIMARY KEY (idEmpleado),
+  FOREIGN KEY (idUsuario) REFERENCES SistemaVentasDB.Usuarios(idUsuario)
 )
 ENGINE = INNODB,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci,
 COMMENT='Tabla de empleados';
 
 ALTER TABLE SistemaVentasDB.Empleados ADD INDEX idxDocumento (documento);
@@ -48,8 +61,6 @@ CREATE TABLE SistemaVentasDB.Categorias (
   PRIMARY KEY (idCategoria)
 )
 ENGINE = INNODB,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci,
 COMMENT='Tabla de categorias de los productos';
 
 ALTER TABLE SistemaVentasDB.Categorias ADD INDEX idxFecha (fecha);
@@ -71,8 +82,6 @@ CREATE TABLE SistemaVentasDB.Productos (
   FOREIGN KEY (idCategoria) REFERENCES SistemaVentasDB.Categorias(idCategoria)
 )
 ENGINE = INNODB,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci,
 COMMENT='Tabla de productos';
 
 ALTER TABLE SistemaVentasDB.Productos ADD INDEX idxSku (sku);
@@ -98,8 +107,6 @@ CREATE TABLE SistemaVentasDB.Clientes (
   PRIMARY KEY (idCliente)
 )
 ENGINE = INNODB,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci,
 COMMENT='Tabla de clientes';
 
 ALTER TABLE SistemaVentasDB.Clientes ADD INDEX idxTipoDocumento (tipoDocumento);
@@ -123,8 +130,6 @@ CREATE TABLE SistemaVentasDB.Inventario (
   FOREIGN KEY (idProducto) REFERENCES SistemaVentasDB.Productos(idProducto)
 )
 ENGINE = INNODB,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci,
 COMMENT='Tabla de inventario';
 
 ALTER TABLE SistemaVentasDB.Inventario ADD INDEX idxIdProducto (idProducto);
@@ -148,8 +153,6 @@ CREATE TABLE SistemaVentasDB.Ordenes (
   FOREIGN KEY (idEmpleado) REFERENCES SistemaVentasDB.Empleados(idEmpleado)
 )
 ENGINE = INNODB,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci,
 COMMENT='Tabla de ordenes de compra';
 
 ALTER TABLE SistemaVentasDB.Ordenes ADD INDEX idxIdCliente (idCliente);
@@ -174,8 +177,6 @@ CREATE TABLE SistemaVentasDB.Comprobantes (
   FOREIGN KEY (idOrden) REFERENCES SistemaVentasDB.Ordenes(idOrden)
 )
 ENGINE = INNODB,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci,
 COMMENT='Tabla de comprobantes';
 
 ALTER TABLE SistemaVentasDB.Comprobantes ADD INDEX idxIdOrden (idOrden);
@@ -202,8 +203,6 @@ CREATE TABLE SistemaVentasDB.OrdenDetalles (
   FOREIGN KEY (idProducto) REFERENCES SistemaVentasDB.Productos(idProducto)
 )
 ENGINE = INNODB,
-CHARACTER SET utf8mb4,
-COLLATE utf8mb4_general_ci,
 COMMENT='Tabla de detalles de las compras';
 
 ALTER TABLE SistemaVentasDB.OrdenDetalles ADD INDEX idxIdOrden (idOrden);
@@ -211,7 +210,6 @@ ALTER TABLE SistemaVentasDB.OrdenDetalles ADD INDEX idxIdProducto (idProducto);
 ALTER TABLE SistemaVentasDB.OrdenDetalles ADD INDEX idxFecha (fecha);
 ALTER TABLE SistemaVentasDB.OrdenDetalles ADD INDEX idxFechaHora (fechaHora);
 ALTER TABLE SistemaVentasDB.OrdenDetalles ADD INDEX idxTimestamp (timestamp);
-
 
 DELIMITER //
 CREATE PROCEDURE sp_insertarcategoria(IN nombre VARCHAR(100),IN fecha DATE,
@@ -296,10 +294,16 @@ CREATE PROCEDURE sp_insertarempleado(IN nombres VARCHAR(50), IN apellidos VARCHA
 	IN documento CHAR(15), IN tipoEmpleado CHAR(15), IN fechaNacimiento DATE, 
         IN fecha DATE,IN fechaHora DATETIME,IN timestamp BIGINT)
 BEGIN
-	INSERT INTO Empleados(apellidos,celular,documento,tipoEmpleado,fecha,
+    INSERT INTO Usuarios(username,pass,fecha,fechaHora,timestamp) 
+        VALUES(documento,MD5(documento),fecha,fechaHora,timestamp);
+    
+    SET @idUsuario = LAST_INSERT_ID();
+
+    INSERT INTO Empleados(apellidos,celular,documento,idUsuario,tipoEmpleado,fecha,
         fechaHora,fechaNacimiento,nombres,telefono,timestamp) 
-	VALUES(apellidos,celular,documento,tipoEmpleado,fecha,fechaHora,
+	VALUES(apellidos,celular,documento,@idUsuario,tipoEmpleado,fecha,fechaHora,
         fechaNacimiento,nombres,telefono,timestamp);
+
 END //
 
 CREATE PROCEDURE sp_editarempleado(IN id INTEGER, IN nombres VARCHAR(50), 
@@ -348,3 +352,15 @@ CREATE PROCEDURE sp_eliminarcliente(IN id INTEGER)
 BEGIN
 	DELETE FROM Clientes WHERE idCliente = id;
 END //
+
+DELIMITER //
+CREATE PROCEDURE sp_login(IN username CHAR(20), IN pwd CHAR(50))
+BEGIN
+	SELECT MD5(pwd) INTO @realpass;
+	SELECT idUsuario, username,fecha,fechaHora,timestamp
+        FROM Usuarios WHERE username = username AND
+        pass = @realpass;
+END //
+
+CALL sp_insertarempleado('root','root','root','root','root','Administrador',
+    null,null,null,null);

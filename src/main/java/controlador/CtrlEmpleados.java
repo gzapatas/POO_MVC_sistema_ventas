@@ -29,9 +29,6 @@ public class CtrlEmpleados extends AbstractAction{
     public CtrlEmpleados(EmpleadosView view) {
         this.view = view;
         this.empleadosDAO = new EmpleadosDAO();
-    }
-    
-    public void init() {
         this.view.btnAgregar.addActionListener(this);
         this.view.btnBuscar.addActionListener(this);
         this.view.btnList.addActionListener(this);
@@ -40,7 +37,9 @@ public class CtrlEmpleados extends AbstractAction{
         this.view.btnBuscar.setActionCommand("SEARCH");
         this.view.btnList.setActionCommand("LIST");
         this.view.btnGuardar.setActionCommand("SAVE");
-        
+    }
+    
+    public void init() {
         MenuPrincipalView.getInstance().AddWindow(this.view);
         this.view.setVisible(true);
         this.listar();
